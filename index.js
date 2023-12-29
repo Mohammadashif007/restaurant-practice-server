@@ -32,7 +32,9 @@ async function run() {
 
     const collectionDB = client.db("restaurant_DB").collection('menu1');
 
-    const reviewsCollection = client.db("restaurant_DB").collection("reviews")
+    const reviewsCollection = client.db("restaurant_DB").collection("reviews");
+
+    const cartCollection = client.db("restaurant_DB").collection("carts");
     
 // menu collection
     app.get('/menu', async(req, res) => {
@@ -45,6 +47,15 @@ async function run() {
 
     app.get('/reviews', async(req, res) => {
       const result = await reviewsCollection.find().toArray();
+      res.send(result);
+    })
+
+
+//cart collection 
+
+    app.post('/carts', async(req, res) =>{
+      const cartItem = req.body;
+      const result = await cartCollection.insertOne(cartItem);
       res.send(result);
     })
 
