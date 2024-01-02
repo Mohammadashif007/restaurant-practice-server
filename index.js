@@ -30,22 +30,33 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    // user related api
+    const userCollection = client.db("restaurant_DB").collection("users");
+
+    // menu related api
     const collectionDB = client.db("restaurant_DB").collection('menu1');
 
+    // reviews related api
     const reviewsCollection = client.db("restaurant_DB").collection("reviews");
 
-    // const cartCollection = client.db("restaurant_DB").collection("carts");
+
+    // cart related api
     const cartCollection = client.db("restaurant_DB").collection("carts");
+
+    //user collection
+    app.post('/users', async(req, res) => {
+      
+    }) 
+
     
-// menu collection
+  // menu collection
     app.get('/menu', async(req, res) => {
       const result = await collectionDB.find().toArray();
       res.send(result);  
     })
 
 
-// review collection
-
+  // review collection
     app.get('/reviews', async(req, res) => {
       const result = await reviewsCollection.find().toArray();
       res.send(result);
@@ -53,18 +64,7 @@ async function run() {
 
 
 //cart collection 
-
-
-    // app.get('/carts', async(req, res) => {
-    //   const email = req.query.email;
-    //   const query = {email: email}
-    //   const result = await cartCollection.find(query).toArray();
-    //   res.send(result);
-    // })
-
     app.get('/carts', async(req, res) => {
-      // const email = req.query.email;
-      // const query = {email: email}
       const email = req.query.email;
       const query = {email : email}
       const result = await cartCollection.find(query).toArray();
